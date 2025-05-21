@@ -1,13 +1,16 @@
 const sequelize = require('./config/db');
 const User = require('./models/User');
 const express = require('express');
+const authRoutes = require('./routes/auth');
 const app = express();
 
 app.use(express.json());
 
 //auth routes
-const authRoutes = require('./routes/auth'); 
+
 app.use('/api/auth', authRoutes);
+
+app.use('/api/users', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello from first Collabspace App');
