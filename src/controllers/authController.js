@@ -22,7 +22,7 @@ exports.register = async (req, res) => {
             password: hashedPassword,
             role: role || 'member',
             otp: otp,
-            isverified: false
+            isVerified: false
         });
 
         console.log(`OTP for ${email}: is : ${otp}`);
@@ -98,7 +98,7 @@ exports.verifyOtpLogin = async (req, res) => {
             return res.status(400).json({ message: "Invalid or expired OTP" });
         }
 
-        await user.update({ isverified: true });
+        await user.update({ isVerified: true });
 
         const token = jwt.sign(
             { id: user.id, username: user.username, role: user.role },
