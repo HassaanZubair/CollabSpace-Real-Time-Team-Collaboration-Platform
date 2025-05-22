@@ -5,19 +5,19 @@ exports.createWorkspace = async (req, res) => {
 
     try {  
         const { name, description } = req.body;
-        const workspace= await workspace.create({name, description});
-        res.status(201).json(workspace);
+        const newworkspace= await workspaceService.create({name, description});
+        res.status(201).json(newworkspace);
     }
     catch (error) {
-        res.status(500).json({ message: 'Error creating for creating workspace',error: error.message });
+        res.status(500).json({ message: 'Error creating workspace',error: error.message });
     }
 };
 
 // get all workspaces
 exports.getAllWorkspaces = async (req, res) => {
     try {
-        const workspaces = await workspace.findAll();
-        res.status(200).json(workspaces);
+        const workspacesAll = await workspaceService.findAll();
+        res.status(200).json(workspacesAll);
     } catch (error) {
         res.status(500).json({ message: 'Error getting  workspaces', error: error.message });
     }
@@ -26,12 +26,12 @@ exports.getAllWorkspaces = async (req, res) => {
 // get a workspace by id
 exports.getWorkspaceById = async (req, res) => {
     try {
-        const workspace = await workspace.findByPk(req.params.id);
-        if (!workspace) {
+        const foundworkspaceById = await workspaceService.findByPk(req.params.id);
+        if (!foundworkspaceById) {
             return res.status(404).json({ message: 'Workspace not found' });
         }
 
-        res.status(200).json(workspace);
+        res.status(200).json(foundworkspaceById);
     } 
     
     catch (error) {
@@ -44,17 +44,17 @@ exports.getWorkspaceById = async (req, res) => {
 exports.updateWorkspace = async (req, res) => {
     try {
         const { name, description } = req.body;
-        const workspace = await workspace.findByPk(req.params.id);
-        if (!workspace) {
+        const workspaceToUpdate = await workspaceService.findByPk(req.params.id);
+        if (!workspaceToUpdate) {
             return res.status(404).json({ message: 'Workspace not found' });
         }
 
-        workspace.name = name || workspace.name;
-        workspace.description = description || workspace.description;
+        workspaceToUpdate.name = name || workspaceToUpdate.name;
+        workspaceToUpdate.description = description || workspaceToUpdate.description;
 
-       await workspace.save();
+       await workspaceToUpdate.save();
 
-        res.status(200).json(workspace);
+        res.status(200).json(workspaceToUpdate);
     } 
     
     catch (error) {
@@ -65,12 +65,12 @@ exports.updateWorkspace = async (req, res) => {
 // delete a workspace by id
 exports.deleteWorkspace = async (req, res) => {
     try {
-        const workspace = await workspace.findByPk(req.params.id);
-        if (!workspace) {
+        const workspaceToDelete = await workspaceService.findByPk(req.params.id);
+        if (!workspaceToDelete) {
             return res.status(404).json({ message: 'Workspace not found' });
         }
 
-        await workspace.destroy();
+        await workspaceToDelete.destroy();
 
         res.status(204).json({ message: 'Workspace deleted successfully' });
     } 

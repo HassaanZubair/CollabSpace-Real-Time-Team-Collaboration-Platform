@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const workspaceController = require('../controllers/workspaceController');
-const auth = require('../middleware/auth');
+const authencateToken = require('../middleware/auth');
 
 
 //Protected routes
