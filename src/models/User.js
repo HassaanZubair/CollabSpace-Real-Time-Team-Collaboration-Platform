@@ -23,6 +23,14 @@ const User = sequelize.define('User', {
         type: DataTypes.ENUM('admin', 'member'),
         defaultValue: 'member',
     },
+    otp: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  isVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  } 
 },
 {
     timestamps: true,
