@@ -7,6 +7,10 @@ const authenticateToken = require('../middleware/auth');
 // Register route
 router.post('/register', authController.register);
 
+// Verify OTP route
+router.post("/verify-otp", authController.verifyOtpLogin);
+
+
 //login route
 router.post('/login', authController.login);
 
