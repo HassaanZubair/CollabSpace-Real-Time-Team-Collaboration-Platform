@@ -2,11 +2,14 @@ const sequelize = require('./config/db');
 const { Router } = require('express');
 const User = require('./models/User');
 const express = require('express');
+const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const workspaceRoutes = require('./routes/workspaceRoutes');
+// const http = require('http');
 
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 

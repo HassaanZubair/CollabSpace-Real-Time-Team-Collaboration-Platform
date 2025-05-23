@@ -2,9 +2,9 @@ const request = require('supertest');
 const app = require('../src/app'); 
 const sequelize = require('../src/config/db'); 
 
-beforeAll(async () => {
-  await sequelize.sync(); // wait for database to be ready
-});
+// beforeAll(async () => {
+//   await sequelize.sync(); // wait for database to be ready
+// });
 
 afterAll(async () => {
   await new Promise(resolve => setTimeout(resolve, 500)); // wait 0.5s

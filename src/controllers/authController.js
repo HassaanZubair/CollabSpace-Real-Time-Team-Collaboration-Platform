@@ -1,6 +1,16 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const nodemailer = require("nodemailer");
+
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
 
 exports.register = async (req, res) => {
     try {
@@ -25,7 +35,12 @@ exports.register = async (req, res) => {
             isVerified: false
         });
 
-        console.log(`OTP for ${email}: is : ${otp}`);
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Verify OTP code from email ',
+            text: `Your OTP is: ${otp}`
+        });
 
         const token = jwt.sign(
             { id: user.id, username: user.username, role: user.role },

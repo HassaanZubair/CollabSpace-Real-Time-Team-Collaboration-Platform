@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Verify OTP</title>
+
+</head>
+<body>
+
+  <h2>Verify OTP</h2>
+
+  <label>Email:</label><br>
+  <input type="email" id="email"><br><br>
+
+  <label>OTP:</label><br>
+  <input type="text" id="otp"><br><br>
+
+  <button onclick="verifyOTP()">Verify OTP</button>
+
+  <p id="message"></p>
+
+  <script>
+
+    function verifyOTP() {
+
+      const email = document.getElementById('email').value;
+      const otp = document.getElementById('otp').value;
+
+      fetch('http://localhost:3000/api/auth/verifyOtpLogin', {
+
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp })
+      })
+      .then(res => res.json())
+      .then(data => {
+        
+        if (data.token) {
+          document.getElementById('message').innerText = "OTP verified! Redirecting to Login...";
+          setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+        }
+         else {
+          document.getElementById('message').innerText = "Error: " + (data.message || "Invalid OTP.");
+        }
+      })
+      .catch(() => {
+        document.getElementById('message').innerText = "Server error, try again.";
+      });
+    }
+    
+  </script>
+</body>
+</html>
